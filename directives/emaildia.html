@@ -8,19 +8,13 @@
         <h2>Inputs</h2>
         <form id="emailDia" class="js-email-form" ng-model="dia.form.inputs">
 
-          <md-input-container class="md-block" id="word-cont" ng-hide="dia.form.htmlRaw">
-            <label>Marked-up Copy Document</label>
-            <textarea md-no-autogrow name="body" ng-change="dia.processForm()" class="ow-textarea ow-input" ng-model="dia.form.wordRaw" rows="5" md-select-on-focus></textarea>
-            <div class="hint">///body divides header data from email body</div>
-          </md-input-container>
-
-          <md-input-container class="md-block" id="html-cont" ng-hide="dia.form.wordRaw">
+          <md-input-container class="md-block" id="html-cont">
             <label>HTML Email</label>
             <textarea md-no-autogrow name="html-email" ng-change="dia.processForm()" class="ow-textarea ow-input" ng-model="dia.form.htmlRaw" rows="5" md-select-on-focus></textarea>
             <div class="hint"></div>
           </md-input-container>
 
-          <div ng-show="dia.form.htmlRaw || dia.form.wordRaw">
+          <div>
             <md-input-container ng-show="dia.form.wordRaw">
               <label>Header Image Source</label>
               <input id="aspotImg" ng-change="dia.processForm()" ng-model="dia.form.aspotImg" name="aspotImg" class="ow-input">
@@ -85,14 +79,6 @@
             <input class="ow-input param" type="hidden" name="m" value="#messageid#">
             <input class="ow-input param" type="hidden" name="t" value="h">
             <input class="ow-input param" type="hidden" name="mcat_track" value="https://cs.thomsonreuters.com/email/link.aspx">
-
-            <br />
-            <md-radio-group ng-model="dia.form.utm_source" ng-change="dia.processForm()">
-              <label>Version</label>
-              <md-radio-button name="utm_source" value="mcat-h" class="md-primary">MCAT</md-radio-button>
-              <md-radio-button name="utm_source" value="mcat-o"> Online </md-radio-button>
-
-            </md-radio-group>
 
             <br />
             <md-radio-group ng-model="dia.form.footerType" name="footer_type" ng-change="dia.processForm()">

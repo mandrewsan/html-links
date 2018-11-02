@@ -2,8 +2,15 @@
         <h2>Link Update</h2>
         <div class="links">
 	        <md-input-container class="md-block" ng-repeat="link in dia.linkOutputs track by $index">
-	            <label>{{dia.linkAnchors[$index]}}</label>
-	            <textarea name="" ng-change="dia.updateLink($index)" class="ow-textarea ow-input" ng-model="dia.linkOutputs[$index]" rows="2" md-select-on-focus></textarea>
+	            <!-- <label>{{dia.linkAnchors[$index]}}</label> -->
+				<textarea 
+					name="" 
+					ng-change="dia.updateLink($index)" 
+					class="ow-textarea ow-input" 
+					ng-model="dia.linkOutputs[$index]" 
+					rows="2" 
+					md-select-on-focus>
+				</textarea>
 	        </md-input-container>
 	        <p ng-hide="dia.linkOutputs.length>0">Links will be extracted here</p>
 	      </div>
