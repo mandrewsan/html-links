@@ -1,0 +1,14 @@
+<md-content layout-padding flex="50" layout="column">
+        <h2>Input</h2>
+        <md-input-container class="md-block">
+            <label></label>
+            <textarea ng-change="fix.transform(inputText)" ng-model="inputText" md-maxlength="" rows="10"></textarea>
+          </md-input-container>
+    </md-content>
+    <md-content layout-padding flex="50" layout="column">
+        <h2>Output</h2>
+        <md-input-container class="md-block">
+            <label></label>
+            <textarea ng-bind-html="fix.outputText" rows="10" md-select-on-focus></textarea>
+          </md-input-container>
+    </md-content>

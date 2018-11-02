@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex, nofollow">
+<title>Email Do It All</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+.ow-textarea {
+  font-family: monospace!important;
+  font-size: 14px;
+  line-height: 1.2;
+  width: 100%;
+}
+label {
+  display: block;
+}
+.ow-form__group {
+  margin-bottom: 25px;
+}
+.row > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  padding: 20px;
+}
+label, input, textarea, p, div, body, h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, sans-serif;
+}
+.js-auto-output {
+  height: 100%;
+}
+.disabled:after {
+  content: 'provided by body';
+  color: red;
+}
+.disabled {
+  background-color: #f9f9f9;
+  color: #c2c2c2;
+}
+</style>
+</head>
+
+<body>
+<div class="row">
+  <div class="col-md-4">
+    <h2>Input</h2>
+    <form class="js-email-form ow-form--alt ow-form">
+      <div class="ow-form__group ">
+        <label>Header Image Source (img:(NO SPACES))</label>
+        <input type="text" name="aspotImg" class="ow-input">
+      </div>
+      <div class="ow-form__group ">
+        <label>Background Color</label>
+        <label>
+          <input class="ow-input" type="radio" name="bg" value="dark" checked="checked">
+          <span>Dark</span> </label>
+        <label>
+          <input class="ow-input" type="radio" name="bg" value="light">
+          <span>Light</span></label>
+      </div>
+      <div class="ow-form__group ">
+        <label>Eyebrow (eyebrow:)</label>
+        <input class="ow-input" type="text" name="eyebrow">
+      </div>
+      <div class="ow-form__group ">
+        <label>Header Text (header: content //)</label>
+        <textarea name="h1" class="ow-textarea ow-input" rows="4" wrap="soft"></textarea>
+      </div>
+      <div class="ow-form__group ">
+        <label>Sub Heading (subheading:)</label>
+        <textarea name="subhead" class="ow-textarea ow-input" rows="4" wrap="soft"></textarea>
+      </div>
+      <div class="ow-form__group ">
+        <label>CTA Text (cta text:)</label>
+        <input class="ow-input" type="text" name="ctaTxt">
+      </div>
+      <div class="ow-form__group ">
+        <label>CTA Link (cta link:)</label>
+        <input class="ow-input" type="text" name="ctaLink">
+      </div>
+      <div class="ow-form__group ">
+        <label>Body (///body divides header data from email body)</label>
+        <textarea name="body" class="ow-textarea ow-input" rows="4" wrap="soft"></textarea>
+      </div>
+      <div class="ow-form__group ">
+        <label>TL Number</label>
+        <input class="ow-input" type="text" name="tlnumber" placeholder="TL12345">
+      </div>
+      <div class="ow-form__group ">
+        <label>UTM Campaign (tracking:)</label>
+        <input class="ow-input" type="text" name="utm_campaign" placeholder="campaign_name">
+      </div>
+      <div class="ow-form__group ">
+        <label>UTM Medium (medium: email/mel)</label>
+        <input class="ow-input" type="text" name="utm_medium" placeholder="email/mel">
+      </div>
+      <input class="ow-input" type="hidden" name="u" value="#usermessageid#">
+      <input class="ow-input" type="hidden" name="m" value="#messageid#">
+      <input class="ow-input" type="hidden" name="t" value="h">
+      <div class="ow-form__group ">
+        <label>Version</label>
+        <label>
+          <input class="ow-input" type="radio" name="utm_source" value="mcat-h" checked="checked">
+          <span>MCAT</span></label>
+        <label>
+          <input class="ow-input" type="radio" name="utm_source" value="mcat-o">
+          <span>Online</span></label>
+      </div>
+      <div class="ow-form__group ">
+        <label>Footer Type</label>
+        <label>
+          <input class="ow-input" type="radio" name="footer_type" value="final-filter-two">
+          <span>Final Filter 2</span></label>
+        <label>
+          <input class="ow-input" type="radio" name="footer_type" value="transactional">
+          <span>Transactional</span></label>
+        <label>
+          <input class="ow-input" id="one_time_only" type="radio" name="footer_type" value="one-time-only">
+          <span>One-Time Only</span></label>
+      </div>
+      <div class="ow-form__group one-time" style="display:none">
+        <label>Event/Webcast Name</label>
+        <input class="ow-input" type="text" name="event_name">
+      </div>
+      <div class="ow-form__group one-time" style="display:none">
+        <label>Presented by</label>
+        <input class="ow-input" type="text" name="presented_by">
+      </div>
+      <div>
+        <h3>More markup</h3>
+        <p>/btn/url-- content</p>
+        <p>/box content box/</p>
+        <p>/l/url-- content --</p>
+        <p>/br</p>
+        <p>/ss content /ss</p>
+        <p></p>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-8">
+    <h2>Output</h2>
+    <textarea class="js-auto-output ow-textarea" rows="20" wrap="soft"></textarea>
+  </div>
+  <div>
+    <h2>Render</h2>
+    <div id="email-render"></div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<md-sidenav
+  class="md-sidenav-left"
+  md-component-id="left"
+  md-is-locked-open="$mdMedia('gt-sm')"
+  md-whiteframe="4">
+    <md-content layout-padding>   
+      <div>
+        <h2>Inputs</h2>
+        <form id="emailDia" class="js-email-form" ng-model="dia.form.inputs">
+
+          <md-input-container class="md-block" id="word-cont" ng-hide="dia.form.htmlRaw">
+            <label>Marked-up Copy Document</label>
+            <textarea md-no-autogrow name="body" ng-change="dia.processForm()" class="ow-textarea ow-input" ng-model="dia.form.wordRaw" rows="5" md-select-on-focus></textarea>
+            <div class="hint">///body divides header data from email body</div>
+          </md-input-container>
+
+          <md-input-container class="md-block" id="html-cont" ng-hide="dia.form.wordRaw">
+            <label>HTML Email</label>
+            <textarea md-no-autogrow name="html-email" ng-change="dia.processForm()" class="ow-textarea ow-input" ng-model="dia.form.htmlRaw" rows="5" md-select-on-focus></textarea>
+            <div class="hint"></div>
+          </md-input-container>
+
+          <div ng-show="dia.form.htmlRaw || dia.form.wordRaw">
+            <md-input-container ng-show="dia.form.wordRaw">
+              <label>Header Image Source</label>
+              <input id="aspotImg" ng-change="dia.processForm()" ng-model="dia.form.aspotImg" name="aspotImg" class="ow-input">
+              <div class="hint">img:{image url}</div>
+            </md-input-container>
+            <br />
+            <md-radio-group ng-show="dia.form.wordRaw" ng-change="dia.processForm()" ng-model="dia.form.clrinput" name="bg">
+              <label>Text Color</label>
+              <md-radio-button value="dark" class="md-primary">Light</md-radio-button>
+              <md-radio-button value="light"> Dark </md-radio-button>
+            </md-radio-group>
+
+            <md-input-container ng-show="dia.form.wordRaw">
+              <label>Eyebrow</label>
+              <input id="eyebrow" ng-change="dia.processForm()" ng-model="dia.form.eyebrow" name="eyebrow" class="ow-input">
+              <div class="hint">eyebrow:{text}</div>
+            </md-input-container>
+
+            <md-input-container class="md-block" ng-show="dia.form.wordRaw">
+                <label>Header Text</label>
+                <textarea id="h1" ng-change="dia.processForm()" md-no-autogrow name="h1" id="h1" class="ow-textarea ow-input" ng-model="dia.form.h1" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+                <div class="hint">header:{text}//</div>
+              </md-input-container>
+
+            <md-input-container class="md-block" ng-show="dia.form.wordRaw">
+              <label>Sub Heading</label>
+              <textarea ng-change="dia.processForm()" md-no-autogrow class="ow-textarea ow-input" id="subhead" ng-model="dia.form.subhead" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+              <div class="hint">subheading:{text}</div>
+            </md-input-container>
+
+            <md-input-container ng-show="dia.form.wordRaw">
+              <label>CTA Text</label>
+              <input id="ctaTxt" ng-change="dia.processForm()" ng-model="dia.form.ctaTxt" name="eyebrow" class="ow-input">
+              <div class="hint">cta text:{text}</div>
+            </md-input-container>
+            
+            <md-input-container ng-show="dia.form.wordRaw">
+              <label>CTA Link</label>
+              <input id="ctaLink" ng-change="dia.processForm()" ng-model="dia.form.ctaLink" type="text" name="ctaLink">
+              <div class="hint">cta link:{url}</div>
+            </md-input-container>
+
+            <md-input-container>
+              <label>TL Number</label>
+              <input id="tlnumber" ng-change="dia.processForm()" ng-model="dia.form.tlnumber" class="ow-input param" type="text" name="tlnumber">
+              <div class="hint" ng-show="dia.form.wordRaw">TL{5 digit number}</div>
+            </md-input-container>
+            
+            <md-input-container>
+              <label>UTM Campaign</label>
+              <input id="utm_campaign" ng-change="dia.processForm()" ng-model="dia.form.utm_campaign" class="ow-input param" type="text" name="utm_campaign">
+              <div class="hint" ng-show="dia.form.wordRaw">tracking:{text}</div>
+            </md-input-container>
+
+            <md-input-container>
+              <label>UTM Medium</label>
+              <input ng-change="dia.processForm()" ng-model="dia.form.utm_medium" class="ow-input param" id="utm_medium" type="text" name="utm_medium">
+              <div class="hint" ng-show="dia.form.wordRaw">medium:{text}</div>
+            </md-input-container>
+
+            <input class="ow-input param" type="hidden" name="u" value="#usermessageid#">
+            <input class="ow-input param" type="hidden" name="m" value="#messageid#">
+            <input class="ow-input param" type="hidden" name="t" value="h">
+            <input class="ow-input param" type="hidden" name="mcat_track" value="https://cs.thomsonreuters.com/email/link.aspx">
+
+            <br />
+            <md-radio-group ng-model="dia.form.utm_source" ng-change="dia.processForm()">
+              <label>Version</label>
+              <md-radio-button name="utm_source" value="mcat-h" class="md-primary">MCAT</md-radio-button>
+              <md-radio-button name="utm_source" value="mcat-o"> Online </md-radio-button>
+
+            </md-radio-group>
+
+            <br />
+            <md-radio-group ng-model="dia.form.footerType" name="footer_type" ng-change="dia.processForm()">
+              <label>Footer Type</label>
+              <md-radio-button value="promotional"> Promotional </md-radio-button>
+              <md-radio-button value="transactional"> Transactional </md-radio-button>
+              <!-- <md-radio-button value="one-time-only"> One-Time Only </md-radio-button> -->
+              <!-- <md-radio-button class="md-primary" value="final-filter-two">Final FIlter 2</md-radio-button> -->
+
+            </md-radio-group>
+
+
+            <div class="ow-form__group one-time" style="display:none">
+              <label>Event/Webcast Name</label>
+              <input id="event_name" class="ow-input" type="text" name="event_name">
+            </div>
+            <div class="ow-form__group one-time" style="display:none">
+              <label>Presented by</label>
+              <input id="presented_by" class="ow-input" type="text" name="presented_by">
+            </div>
+            <div ng-show="dia.form.wordRaw">
+              <h3>More markup</h3>
+              <p>/btn/url-- content</p>
+              <p>/box content box/</p>
+              <p>/l/url-- content --</p>
+              <p>/br</p>
+              <p>/ss content /ss</p>
+              <p>/// at end of last ul li</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </md-content>
+  </md-sidenav>
+
+<md-tabs id="dia-tabs" md-dynamic-height md-border-bottom flex="40">
+   <md-tab label="output">
+    <md-content flex layout="row" layout-padding>
+      <div flex layout="column">
+        <h2>Output</h2>
+        <md-input-container class="md-block">
+            <label>Here's your email HTML</label>
+            <textarea id="output" ng-model="dia.form.output" md-maxlength="" rows="10" md-select-on-focus></textarea>
+          </md-input-container>
+      </div>
+
+    </md-content>
+   </md-tab>
+   <md-tab label="links">
+    <md-content id="link-update" flex layout="row" layout-padding>
+          <div flex>
+              <h2>Link Update</h2>
+              <div class="links">
+                <md-input-container class="md-block" ng-repeat="link in dia.linkOutputs track by $index">
+                    <label>{{dia.linkAnchors[$index]}}</label>
+                    <textarea name="" ng-change="dia.updateLink($index)" class="ow-textarea ow-input" ng-model="dia.linkOutputs[$index]" rows="2" md-select-on-focus></textarea>
+                </md-input-container>
+                <p ng-hide="dia.linkOutputs.length>0">Links will be extracted here</p>
+              </div>
+          </div>
+    </md-content>
+   </md-tab>
+ </md-tabs>
+
+ <md-content flex layout="row" layout-padding flex="50" layout-margin>
+   <div flex>
+       <h2>Render</h2>
+       <div ng-bind-html="dia.form.render"></div>
+   </div>
+ </md-content>

@@ -1,0 +1,60 @@
+<md-sidenav
+      class="md-sidenav-left la-sidenav"
+      md-component-id="left"
+      md-is-locked-open="$mdMedia('gt-md')"
+      md-whiteframe="4">
+        <md-content layout-padding>   
+          <div>
+            <h2>Input</h2>
+            <form id="emailDia" class="js-email-form" ng-model="link.form.inputs">
+
+
+              <md-input-container class="md-block">
+                <label>HTML</label>
+                <textarea id="la-input" md-no-autogrow name="body" ng-change="link.processForm()" class="ow-textarea ow-input" ng-model="link.form.rawHtml" rows="30" md-select-on-focus></textarea>
+                <div class="hint">Paste your HTML here</div>
+              </md-input-container>
+
+            
+            </form>
+          </div>
+        </md-content>
+        <md-button ng-class="(link.curView==='output'?'selected':'')" ng-click="link.changeView('output')">Output</md-button>
+        <md-button ng-class="(link.curView==='render'?'selected':'')" ng-click="link.changeView('render')">Render</md-button>
+        
+      </md-sidenav>
+
+      <md-content flex="40" layout="column" ng-show="link.curView==='output'">
+        <div flex layout-padding>
+          <h2>Output</h2>
+          <md-input-container class="md-block">
+              <label>Here's your email HTML</label>
+              <textarea id="output" ng-model="link.form.output" md-maxlength="" rows="20" md-select-on-focus></textarea>
+            </md-input-container>
+        </div>
+      </md-content>
+
+      <md-content flex="40" layout="column" ng-show="link.curView==='render'">
+        <div flex layout-padding>
+            <h2>Render</h2>
+            <div id="render" ng-bind-html="link.form.render"></div>
+        </div>
+      </md-content>
+
+
+     <md-content flex layout="row" layout-padding flex="50" layout-margin>
+       <md-content id="link-update" flex layout="row" layout-padding>
+          <div flex>
+              <h2>Link Update</h2>
+              <div class="links">
+                <md-input-container class="md-block" ng-repeat="item in link.linkOutputs track by $index">
+                    <label>{{link.linkAnchors[$index]}}</label>
+                    <textarea name="" ng-change="link.updateLink($index)" class="ow-textarea ow-input" ng-model="link.linkOutputs[$index]" rows="2" md-select-on-focus>
+                      {{item.linkOutputs[$index]}}
+                    </textarea>
+                </md-input-container>
+                <p ng-hide="dia.linkOutputs.length>0">Links will be extracted here</p>
+              </div>
+          </div>
+        </md-content>
+     </md-content>

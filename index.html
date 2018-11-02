@@ -1,0 +1,62 @@
+<html lang="en" >
+<head>
+  <base href="/at/">
+  <meta charset="utf-8">
+  <title>Andrew's Email Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="css/angular-material.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body ng-app="tools" ng-cloak ng-controller="ToolCtrl">
+  <md-toolbar class="md-hue-1">
+    <div class="md-toolbar-tools">
+      
+      <md-input-container>
+        <label style="display:none">Tools</label>
+      <md-select ng-model="curTool" ng-change="switchTool(curTool)">
+        <md-option value="emaildia">Email do it all</md-option>
+        <md-option value="linkassist">Link Visualizer</md-option>
+        <md-option value="fixtext">Fix Text</md-option>
+      </md-select>
+    </md-input-container>
+    <!-- <md-button ng-click="reset()">
+      Reset All
+    </md-button> -->
+    </div>
+  </md-toolbar>
+
+  <section layout="row" flex ng-controller="EmailDia as dia" ng-show="curTool==='emaildia'" email-dia></section>
+
+  <section layout="row" flex ng-controller="LinkAssist as link" ng-show="curTool==='linkassist'" link-assist></section>
+
+  <section layout="row" flex ng-controller="FixText as fix" ng-show="curTool==='fixtext'" fixtext></section>
+
+  
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="scripts/angular.min.js"></script>
+  <script src="scripts/angular-animate.min.js"></script>
+  <script src="scripts/angular-aria.min.js"></script>
+  <script src="scripts/angular-messages.min.js"></script>
+  <script src="scripts/angular-sanitize.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="scripts/angular-material.min.js"></script>
+  
+  <!-- Application bootstrap  -->
+  <script type="text/javascript">
+    var app = angular.module('tools', ['ngMaterial', 'ngSanitize']);
+  </script>
+
+  <!-- Controllers -->
+  <script type="text/javascript" src="controllers/tool.js"></script>
+  <script type="text/javascript" src="controllers/fixtext.js"></script>
+  <script type="text/javascript" src="controllers/emaildia.js"></script>
+  <script type="text/javascript" src="controllers/linkassist.js"></script>
+  
+
+  <!-- Directives -->
+  <script type="text/javascript" src="directives/directives.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,108 @@
+<md-content layout-padding>   
+  <div>
+    <h2>Inputs</h2>
+    <form id="emailDia" class="js-email-form" ng-model="dia.form.inputs">
+
+      <md-input-container style="display:none;" class="md-block">
+        <label>Debugger</label>
+        <textarea md-no-autogrow name="body" ng-change="dia.processFormDebug()" class="ow-textarea ow-input" ng-model="dia.form.wordRawDebug" rows="2" md-select-on-focus></textarea>
+      </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Marked-up Doc (///body divides header data from email body)</label>
+        <textarea md-no-autogrow name="body" ng-change="dia.processForm()" class="ow-textarea ow-input" ng-model="dia.form.wordRaw" rows="2" md-select-on-focus></textarea>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Header Image Source (img:(NO SPACES))</label>
+        <input id="aspotImg" ng-change="dia.processForm()" ng-model="dia.form.aspotImg" name="aspotImg" class="ow-input">
+      </md-input-container>
+      <br />
+      <md-radio-group ng-change="dia.processForm()" ng-model="dia.form.clrinput" name="bg">
+        <label>Text Color</label>
+        <md-radio-button value="dark" class="md-primary">Light</md-radio-button>
+        <md-radio-button value="light"> Dark </md-radio-button>
+      </md-radio-group>
+
+      <md-input-container>
+        <label>Eyebrow (eyebrow:)</label>
+        <input id="eyebrow" ng-change="dia.processForm()" ng-model="dia.form.eyebrow" name="eyebrow" class="ow-input">
+      </md-input-container>
+      <md-input-container class="md-block">
+          <label>Header Text (header: content //)</label>
+          <textarea id="h1" ng-change="dia.processForm()" md-no-autogrow name="h1" id="h1" class="ow-textarea ow-input" ng-model="dia.form.h1" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+        </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Sub Heading (subheading:)</label>
+        <textarea ng-change="dia.processForm()" md-no-autogrow class="ow-textarea ow-input" id="subhead" ng-model="dia.form.subhead" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+      </md-input-container>
+
+      <md-input-container>
+        <label>CTA Text (cta text:)</label>
+        <input id="ctaTxt" ng-change="dia.processForm()" ng-model="dia.form.ctaTxt" name="eyebrow" class="ow-input">
+      </md-input-container>
+      
+      <md-input-container>
+        <label>CTA Link (cta link:)</label>
+        <input id="ctaLink" ng-change="dia.processForm()" ng-model="dia.form.ctaLink" type="text" name="ctaLink">
+      </md-input-container>
+
+      <md-input-container>
+        <label>TL Number</label>
+        <input id="tlnumber" ng-change="dia.processForm()" ng-model="dia.form.tlnumber" class="ow-input param" type="text" name="tlnumber">
+      </md-input-container>
+      
+      <md-input-container>
+        <label>UTM Campaign (tracking:)</label>
+        <input id="utm_campaign" ng-change="dia.processForm()" ng-model="dia.form.utm_campaign" class="ow-input param" type="text" name="utm_campaign">
+      </md-input-container>
+
+      <md-input-container>
+        <label>UTM Medium (medium: email/mel)</label>
+        <input ng-change="dia.processForm()" ng-model="dia.form.utm_medium" class="ow-input param" id="utm_medium" type="text" name="utm_medium">
+      </md-input-container>
+
+      <input class="ow-input param" type="hidden" name="u" value="#usermessageid#">
+      <input class="ow-input param" type="hidden" name="m" value="#messageid#">
+      <input class="ow-input param" type="hidden" name="t" value="h">
+      <input class="ow-input param" type="hidden" name="mcat_track" value="https://cs.thomsonreuters.com/email/link.aspx">
+
+      <br />
+      <md-radio-group ng-model="dia.form.utm_source" ng-change="dia.processForm()">
+        <label>Version</label>
+        <md-radio-button name="utm_source" value="mcat-h" class="md-primary">MCAT</md-radio-button>
+        <md-radio-button name="utm_source" value="mcat-o""> Online </md-radio-button>
+
+      </md-radio-group>
+
+      <br />
+      <md-radio-group ng-model="data.group1" name="footer_type" style="display:none;">
+        <label>Footer Type</label>
+        <md-radio-button value="dark" class="md-primary" value="final-filter-two">Final FIlter 2</md-radio-button>
+        <md-radio-button value="light" value="transactional"> Transactional </md-radio-button>
+        <md-radio-button value="light" value="one-time-only"> One-Time Only </md-radio-button>
+
+      </md-radio-group>
+
+
+      <div class="ow-form__group one-time" style="display:none">
+        <label>Event/Webcast Name</label>
+        <input id="event_name" class="ow-input" type="text" name="event_name">
+      </div>
+      <div class="ow-form__group one-time" style="display:none">
+        <label>Presented by</label>
+        <input id="presented_by" class="ow-input" type="text" name="presented_by">
+      </div>
+      <div>
+        <h3>More markup</h3>
+        <p>/btn/url-- content</p>
+        <p>/box content box/</p>
+        <p>/l/url-- content --</p>
+        <p>/br</p>
+        <p>/ss content /ss</p>
+        <p>/// at end of last ul li</p>
+      </div>
+    </form>
+  </div>
+</md-content>

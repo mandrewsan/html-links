@@ -1,0 +1,63 @@
+md-radio-group label {
+	line-height: 44px;
+}
+textarea {
+	resize: none;
+}
+md-sidenav md-input-container {
+	margin:8px 0;
+	width:100%;
+}
+textarea#output {
+	font-family:monospace;
+	font-size:12px;
+	line-height:14px;
+}
+.link-output p {
+	overflow-wrap:break-word;
+}
+#dia-tabs md-content, #link-update > div {
+	height:100%;
+	width: 100%;
+}
+#link-update md-input-container {
+	width: 100%;
+}
+#link-update .links {
+	margin-top:40px;
+}
+
+.hint {
+    /* Position the hint */
+    position: absolute;
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: #a5a5a5; 
+  }
+  #la-input, textarea[name=html-email] {
+  	font-family: monospace;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .la-sidenav .md-button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 15px 20px;
+    border-bottom: 1px solid #d3d3d3;
+    margin: 0;
+    cursor: pointer;
+    border-top: 1px solid #d3d3d3;
+  }
+  .la-sidenav .md-button+.md-button {
+    border-top: none;
+  }
+  .md-button.selected {
+    background-color: rgba(158,158,158,0.2);
+  }

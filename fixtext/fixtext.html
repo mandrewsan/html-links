@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex, nofollow">
+<title>Email Do It All</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+.ow-textarea {
+  font-family: monospace!important;
+  font-size: 14px;
+  line-height: 1.2;
+  width: 100%;
+}
+label {
+  display: block;
+}
+.ow-form__group {
+  margin-bottom: 25px;
+}
+.row > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  padding: 20px;
+}
+label, input, textarea, p, div, body, h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, sans-serif;
+}
+.js-auto-output {
+  height: 100%;
+}
+.disabled:after {
+  content: 'provided by body';
+  color: red;
+}
+.disabled {
+  background-color: #f9f9f9;
+  color: #c2c2c2;
+}
+</style>
+</head>
+
+<body>
+<div class="row">
+  <h1>Fix my text</h1>
+  <div class="col-md-4">
+    <h2>Input</h2>
+    <form class="js-email-form ow-form--alt ow-form">
+      <div class="ow-form__group ">
+        <label>Text</label>
+        <textarea name="inputTxt" class="ow-input ow-textarea" rows="10"></textarea>
+      </div>
+      
+    </form>
+  </div>
+  <div class="col-md-8">
+    <h2>Output</h2>
+    <textarea class="js-auto-output ow-textarea" rows="10" wrap="soft"></textarea>
+  </div>
+</div>
+<script src="fixtext.js"></script>
+</body>
+</html>
