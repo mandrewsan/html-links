@@ -8,16 +8,11 @@ app.controller('EmailDia', function($sce) {
 
 		if (dia.form.htmlRaw) {
 
-			setDefaultAttrs(); // set default attrs
 			let emailParsed = parseLinks(dia.form.htmlRaw);
-
-			const rxFooter = /CS FOOTER[\s\S]*END CS FOOTER/;
-			let currentFooter = rxFooter.exec(emailParsed);
-
-			// Remove online link
-			emailParsed = emailParsed.replace(/<a.*Read this email online[\s\S]*?<br>[\s\S]*?<br>/g,"").replace(/This message was delivered to[\s\S]*?<br>[\s\S]*?<br>/g,"");
 	
-			output(emailParsed); // output email
+			setDefaultAttrs();
+
+			output(emailParsed);
 			linkExpose(emailParsed);
 
 		} else {
@@ -27,58 +22,9 @@ app.controller('EmailDia', function($sce) {
 
 	}
 
-	parseWordRaw = function() {
-
-		if (dia.form.wordRaw) {
-
-			// Remove odd characters
-			dia.form.word = dia.form.wordRaw.replace(/\/br/g, '<br>').replace(/’/g,"'").replace(/—/g,"&mdash;").replace(/“/g,'&quot;').replace(/”/g,'"').replace(/ & /g," &amp; ").replace(/®/g,"<sup>&reg;</sup>").replace(/©/g,"<sup>&copy;</sup>").replace(/®/g,"<sup>&reg;</sup>").replace(/™/g,"<sup>&trade;</sup>");
-
-			// Create array for disabled inputs
-			dia.form.disabled = [];
-
-			// create regex criteria
-			var regExp = {
-			  'tlnumber': /(tl\d{5}|ta\d{6})/gi,
-			  'utm_campaign': /tracking:(.*)/gi,
-			  'utm_medium': /medium:(.*)/gi,
-			  'body': /[\s\S]*?\/\/\/body([\s\S]*)/gi
-			}
-
-			// Loop through regExp object, find matches in body
-			for (var key in regExp) {
-				var match = regExp[key].exec(dia.form.word);
-				if (match!==null) {
-					dia.form[key] = match[1];
-					dia.form.disabled.push(key);
-				} else if (key==='body') {
-					// special treatment for body
-					dia.form.body = dia.form.word;
-				}
-			}
-
-			// get selectors, disable those supplied
-			var inputs = document.getElementsByClassName('ow-input');
-
-			for (var i=0;i<inputs.length;i++) {
-				if (dia.form.disabled.indexOf(inputs[i]['id'])>-1) {
-					inputs[i].disabled = true;
-				} else {
-					inputs[i].disabled = false;
-				}
-			}
-
-		}
-	
-	}
-
 	setDefaultAttrs = function() {
 		// Force online version
 		dia.form.utm_source = 'mcat-o';
-
-		if (!dia.form.tlnumber || dia.form.tlnumber===null) {
-			dia.form.tlnumber = 'TL#####';
-		}
 
 		if (!dia.form.utm_medium | dia.form.utm_medium===null) {
 			dia.form.utm_medium = 'email';
@@ -91,12 +37,8 @@ app.controller('EmailDia', function($sce) {
 		// Index for links
 		var elIndex = 0, globalParams = {};
 		
-		// email link correction: adds parameter for proper treatment
-		email = email.replace(/href="(mailto:.*?)"/g, (match, url) => {
-		  url = url+'?y=email';
-		  var res = 'href="'+url+'"';
-		  return res;
-		})
+		// email link treatment
+		email = email.replace(/href="(mailto:.*?)"/g, (match, url) => `href="${url}"`)
 
 		// build object of globalParams and values
 		var paramInputs = document.getElementsByClassName('param');
@@ -111,6 +53,27 @@ app.controller('EmailDia', function($sce) {
 		// add in utm_source
 		globalParams.utm_source = dia.form.utm_source;
 		dia.form.links = [];
+
+
+		const parser = new DOMParser();
+		parsedHTML = parser.parseFromString( email, "text/html" )
+
+		let htmlLinks = parsedHTML.querySelectorAll('a')
+
+		htmlLinks.forEach( link => {
+
+			let strippedURL = link.href.split("?")[0]
+
+			const params = (new URL(strippedURL)).searchParams
+			
+			params.append('utm_campaign', dia.form.utmCampaign)
+			params.append('utm_medium', dia.form.utmMedium)
+			params.append('utm_source', dia.form.utmSource)
+			params.append('utm_content', dia.form.utmContent)
+
+			console.log(params)
+		})
+
 
 		// Param logic
 		var email = email.replace(/href="(.*?)"/g, (match, link) => {
@@ -178,20 +141,7 @@ app.controller('EmailDia', function($sce) {
 			        elIndex++;
 			      }
 			      (params.y = params.y == 'link'? 'link' + elIndex: params.y)
-			    }
-
-			    // Build utm_content param
-			    
-			    // previous working version
-			    // if (params.utm_content === undefined && !gaIgnore) {
-			    //   params.utm_content = `${globalParams.tlnumber}-${params.y}`;
-
-			    // }
-
-			    // new version
-			    if (!gaIgnore) {
-			      params.utm_content = `${globalParams.tlnumber}-${params.y}`;
-			    }
+					}
 
 			    // Add GA params
 			    if (!gaIgnore) {
@@ -283,13 +233,13 @@ app.controller('EmailDia', function($sce) {
 	}
 
 
-	output = function(emailParsed) {
+	const output = function(emailParsed) {
 		dia.form.output = emailParsed; 
 		dia.form.render = $sce.trustAsHtml(emailParsed);
 	}
 
 	// logic for link updating
-	linkExpose = function(emailParsed) {
+	const linkExpose = function(emailParsed) {
 		dia.linkOutputs = [];
 		emailParsed.replace(/(<a.*href=")(.*?)"/g, (match, attrs, href) => {
 			href = href.replace(/\s/g, '');
@@ -303,10 +253,9 @@ app.controller('EmailDia', function($sce) {
 
 		// Take email output, replace all links when one link is updated
 		dia.form.output = dia.form.output.replace(/(<a.*href=")(.*?)"/g, (match, attrs, link) => {
-			// console.log('match',match)
+
 			// Set with corresponding link in linkoutputs array
 			let updatedLink = `${attrs}${dia.linkOutputs[count]}"`
-			console.log('newlink',updatedLink)
 
 			// get the next link in this current loop
 			count++

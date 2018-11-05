@@ -56,13 +56,7 @@
               <input id="ctaLink" ng-change="dia.processForm()" ng-model="dia.form.ctaLink" type="text" name="ctaLink">
               <div class="hint">cta link:{url}</div>
             </md-input-container>
-
-            <md-input-container>
-              <label>TL Number</label>
-              <input id="tlnumber" ng-change="dia.processForm()" ng-model="dia.form.tlnumber" class="ow-input param" type="text" name="tlnumber">
-              <div class="hint" ng-show="dia.form.wordRaw">TL{5 digit number}</div>
-            </md-input-container>
-            
+          
             <md-input-container>
               <label>UTM Campaign</label>
               <input id="utm_campaign" ng-change="dia.processForm()" ng-model="dia.form.utm_campaign" class="ow-input param" type="text" name="utm_campaign">
@@ -75,20 +69,22 @@
               <div class="hint" ng-show="dia.form.wordRaw">medium:{text}</div>
             </md-input-container>
 
+            <md-input-container>
+              <label>UTM Source</label>
+              <input id="utm_campaign" ng-change="dia.processForm()" ng-model="dia.form.utm_source" class="ow-input param" type="text" name="utm_source">
+              <div class="hint" ng-show="dia.form.wordRaw">tracking:{text}</div>
+            </md-input-container>
+
+            <md-input-container>
+              <label>UTM Content</label>
+              <input id="utm_content" ng-change="dia.processForm()" ng-model="dia.form.utm_content" class="ow-input param" type="text" name="utm_content">
+              <div class="hint" ng-show="dia.form.wordRaw">tracking:{text}</div>
+            </md-input-container>
+
             <input class="ow-input param" type="hidden" name="u" value="#usermessageid#">
             <input class="ow-input param" type="hidden" name="m" value="#messageid#">
             <input class="ow-input param" type="hidden" name="t" value="h">
             <input class="ow-input param" type="hidden" name="mcat_track" value="https://cs.thomsonreuters.com/email/link.aspx">
-
-            <br />
-            <md-radio-group ng-model="dia.form.footerType" name="footer_type" ng-change="dia.processForm()">
-              <label>Footer Type</label>
-              <md-radio-button value="promotional"> Promotional </md-radio-button>
-              <md-radio-button value="transactional"> Transactional </md-radio-button>
-              <!-- <md-radio-button value="one-time-only"> One-Time Only </md-radio-button> -->
-              <!-- <md-radio-button class="md-primary" value="final-filter-two">Final FIlter 2</md-radio-button> -->
-
-            </md-radio-group>
 
 
             <div class="ow-form__group one-time" style="display:none">
