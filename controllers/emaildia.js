@@ -33,162 +33,48 @@ app.controller('EmailDia', function($sce) {
 
 
 	parseLinks = function(email) {
-
-		// Index for links
-		var elIndex = 0, globalParams = {};
 		
-		// email link treatment
-		email = email.replace(/href="(mailto:.*?)"/g, (match, url) => `href="${url}"`)
+		function formatLinks(email) {
 
-		// build object of globalParams and values
-		var paramInputs = document.getElementsByClassName('param');
-		for (var i=0;i<paramInputs.length;i++){
-			globalParams[paramInputs[i].name] = paramInputs[i].value;
-			var paramName = paramInputs[i].name;
-			if (dia.form[paramName]){
-				globalParams[paramName] = dia.form[paramName];
-			}
+			let linkArray = [];
+
+			var email = email.replace(/(<a.*href=")(.*?)"/g, (match, prev, href) => {
+				linkArray.push(href)
+				return match;
+			})
+
+			let formattedLinks = linkArray.map( link => {
+
+				let strippedURL = link.split("?")[0]
+	
+				const params = (new URL(strippedURL)).searchParams
+				
+				params.append('utm_campaign', dia.form.utmCampaign)
+				params.append('utm_medium', dia.form.utmMedium)
+				params.append('utm_source', dia.form.utmSource)
+				params.append('utm_content', dia.form.utmContent)
+	
+				const paramString = params.toString()
+	
+				return `${strippedURL}?${paramString}`
+	
+			})
+
+			return formattedLinks
+
 		}
 
-		// add in utm_source
-		globalParams.utm_source = dia.form.utm_source;
-		dia.form.links = [];
+	  const formattedLinks = formatLinks(email)
 
-
-		const parser = new DOMParser();
-		parsedHTML = parser.parseFromString( email, "text/html" )
-
-		let htmlLinks = parsedHTML.querySelectorAll('a')
-
-		htmlLinks.forEach( link => {
-
-			let strippedURL = link.href.split("?")[0]
-
-			const params = (new URL(strippedURL)).searchParams
-			
-			params.append('utm_campaign', dia.form.utmCampaign)
-			params.append('utm_medium', dia.form.utmMedium)
-			params.append('utm_source', dia.form.utmSource)
-			params.append('utm_content', dia.form.utmContent)
-
-			console.log(params)
-		})
-
+		var linkCount = -1;
 
 		// Param logic
-		var email = email.replace(/href="(.*?)"/g, (match, link) => {
-			link = link.replace(/\s/g,'');
-			if (link.indexOf('?')===-1) {
-				
-				return match;
-			} else {
-				link = link.replace(/(.*?)\?(.*)/g, (newmatch, href, rawParams) => {
+		var email = email.replace(/(<a.*href=")(.*?)"/g, (match, prev, href) => {
+			// console.log(href, formattedLinks[linkCount])
+			linkCount++
+			console.log(`${prev}${formattedLinks[linkCount]}" `)
+			return `${prev}${formattedLinks[linkCount]}" `
 
-			    //turn link parameters into object
-
-			    
-			    var params = rawParams.split("&").reduce(function(prev, cur) {
-			      var [key, value] = cur.split("=");
-			      prev[key] = value;
-			      return prev;
-			    }, {});
-
-			    // Remove user supplied link numbers
-			    if (params.y) {
-			      params['y'] = params['y'].replace(/link\d*/,'link');
-			    }
-			    
-			    // Correct CS http to https in user-provided link
-			    href = href.replace(/http:\/\/cs/g, 'https://cs');
-
-			    // if links already have mcat tracking, set href to l param
-			    if (href === globalParams.mcat_track) {
-			      href = params.l;
-			    }
-
-
-			    // set variable for not counting links
-			    var linkCountIgnore = ["link"].includes(params.y) ? false : true;
-
-			    // set variable for not adding GA params
-			    var gaIgnore = ["url", "link", "logo"].includes(params.y) ? false : true;
-
-			    // set variable for special cases
-			    var gaOnly = params['special']=='ga';
-			    var mcatOnly = params['special']=='mcat';
-
-			    if (params['special']) {
-			      delete params['special'];
-			    }
-
-			    // delete MCAT values for online version
-					["u", "m", "t", "l"].forEach(param => {
-						delete params[param];
-					});
-			  
-			    // handle special mcat only case
-			    if (mcatOnly ) {
-			      gaIgnore = true;
-			      linkCountIgnore = true;
-			      ["utm_campaign","utm_content","utm_medium","utm_source"].forEach(param => {
-			        delete params[param];
-			      });
-			    }
-
-			    // Add link numbers if y exists, y=link
-			    if (params.y && !linkCountIgnore) {
-			      if (!params["ie"]) {
-			        elIndex++;
-			      }
-			      (params.y = params.y == 'link'? 'link' + elIndex: params.y)
-					}
-
-			    // Add GA params
-			    if (!gaIgnore) {
-			      ["utm_campaign","utm_medium","utm_source"].forEach(param => {
-			        params[param] = globalParams[param];
-			      });
-			    }
-
-			    // Remove y param if not needed
-			    //if (gaIgnore || dia.form.utm_source=='mcat-o') {
-			      if (dia.form.utm_source=='mcat-o') {
-			        delete params.y;
-			      }
-
-
-			    // Turn everything back to string
-			    var paramString = Object.keys(params).reduce((prev, cur) => {
-			      return (prev += `&${cur}=${params[cur]}`);
-			    }, "").substring(1);
-			    
-			   
-			    if 
-			      // Do nothing with email links
-			    (href.includes("mailto") === true) {
-			    	linkOutput = '<p>' + href + '</p>';
-						dia.form.links.push(linkOutput);
-			      return `href="${href}"`;
-			    } 
-			      // Special treatment for remove link
-			      else if (href.includes("https://cs.thomsonreuters.com/myaccount/ecomm/remove.aspx")) {
-      	    	linkOutput = `<p>href="${href}?${paramString}"</p>`;
-      				dia.form.links.push(linkOutput);
-			        return `href="${href}?${paramString}"`;
-			      } 
-			      // Default link return
-			      else {
-							// linkOutput = `<p>href="${href}${(!gaIgnore?'?':'')}${paramString}"</p>`;
-							linkOutput = `<p>href="${href}?${paramString}"</p>`;
-							dia.form.links.push(linkOutput);
-							// return `href="${href}${(!gaIgnore?'?':'')}${paramString}"`;
-			        return `href="${href}?${paramString}"`;
-			      }	
-				});
-
-
-				return link;
-			}
 		});
 		return email;
 	};
