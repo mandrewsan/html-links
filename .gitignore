@@ -1,4 +1,4 @@
 .DS_Store
 *.jpg
 *.png
-/directives/taxsite-directives.js
+/controllers/taxsite-directives.js
